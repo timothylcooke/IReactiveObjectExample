@@ -1,0 +1,57 @@
+﻿<reactiveUi:ReactiveUserControl x:TypeArguments="local:MyViewModel"
+                                x:Class="IReactiveObjectExample.MyUserControl"
+                                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                xmlns:reactiveUi="http://reactiveui.net"
+                                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                                xmlns:local="clr-namespace:IReactiveObjectExample"
+                                mc:Ignorable="d"
+                                Margin="20"
+                                d:DataContext="{d:DesignInstance local:MyViewModel}"
+                                d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="20" />
+            <RowDefinition />
+            <RowDefinition Height="20" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <ItemsControl ItemsSource="{Binding Filters}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <CheckBox IsChecked="{Binding ShouldFilter}">
+                        <TextBlock>
+                            Remove names starting with '<Run Text="{Binding FirstChar, Mode=OneWay}" />'
+                        </TextBlock>
+                    </CheckBox>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <Button Grid.Row="2" Content="Add Name" MinWidth="75" HorizontalAlignment="Left" x:Name="AddNameButton" />
+
+        <DockPanel Grid.Row="4">
+            <Label Content="Original Names" DockPanel.Dock="Top" />
+            <ListView ItemsSource="{Binding OriginalNames}" />
+        </DockPanel>
+        <DockPanel Grid.Row="6">
+            <Label Content="Filtered Names" DockPanel.Dock="Top" />
+            <ListView ItemsSource="{Binding FilteredNames}" />
+        </DockPanel>
+
+        <DockPanel Grid.Column="2" Grid.RowSpan="7">
+            <Label Content="Log" DockPanel.Dock="Top" />
+            <ListView ItemsSource="{Binding Log}" />
+        </DockPanel>
+    </Grid>
+</reactiveUi:ReactiveUserControl>
